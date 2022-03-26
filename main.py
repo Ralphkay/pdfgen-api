@@ -13,13 +13,14 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+
 class TextData(BaseModel):
     body: str
     filename: Optional[str] = f"{uuid.uuid4()}"
 
 
 @app.post("/api/v1/from-url")
-async def generate_pdf_from_url(url: str, name: Optional[str]=uuid.uuid4()):
+async def generate_pdf_from_url(url: str, name: Optional[str] = uuid.uuid4()):
     async with httpx.AsyncClient() as client:
         res = await client.get(url)
         await pdfgen.from_url(url, f"{name}.pdf")
