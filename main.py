@@ -1,15 +1,10 @@
 import uuid
 from typing import Optional
 
-from fastapi import Depends, FastAPI
-from fastapi.security import OAuth2PasswordBearer
-
 import httpx
 import pdfgen
 from fastapi import FastAPI
 from pydantic import BaseModel
-
-# pdfkit.from_url('http://google.com', 'out.pdf')
 
 app = FastAPI()
 
@@ -32,8 +27,3 @@ async def generate_pdf_from_url(url: str, name: Optional[str] = uuid.uuid4()):
 async def generate_pdf_from_text(doc: TextData):
     await pdfgen.from_string(doc.body, f"{doc.filename}.pdf")
     return 'done'
-
-#
-# @app.get('/private')
-# async def private(token: str = Depends(oauth2_scheme)):
-#     return {"token":token}
